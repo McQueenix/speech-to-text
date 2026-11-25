@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speech to Text — Real-time Hindi + English Transcription</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◉</span>
+      <div>
+        <h1>Speech to Text</h1>
+        <p>Real-time multilingual transcription · Hindi + English</p>
+      </div>
+    </div>
+    <span id="engineStatus" class="pill">Checking…</span>
+  </header>
+
+  <main class="layout">
+    <!-- Recorder -->
+    <section class="card recorder">
+      <div class="card-head">
+        <h2>Live transcription</h2>
+        <label class="field inline">
+          <span>Language</span>
+          <select id="language">
+            <option value="auto" selected>Auto-detect (mixed Hindi + English)</option>
+            <option value="hi-IN,en-IN">Hindi + English (hint)</option>
+            <option value="en-IN">English (India)</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="ta-IN">Tamil</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="record-row">
+        <button id="recordBtn" class="record-btn" aria-label="Start recording">
+          <span class="dot"></span><span id="recordLabel">Start speaking</span>
+        </button>
+        <div class="meter"><div id="meterBar"></div></div>
+        <span id="timer" class="timer">00:00</span>
+      </div>
+
+      <div id="liveBox" class="live-box" aria-live="polite">
+        <span id="finalText"></span><span id="interimText" class="interim"></span>
+        <span id="placeholder" class="placeholder">Press “Start speaking” and talk — e.g. “Kal meeting hai, please send the report by evening.”</span>
+      </div>
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <!-- History dashboard -->
+    <section class="card history">
+      <div class="card-head">
+        <h2>History <span id="totalCount" class="count"></span></h2>
+        <div class="tools">
+          <input id="search" type="search" placeholder="Search transcriptions…" />
+          <button id="newBtn" class="btn secondary">+ New</button>
+        </div>
+      </div>
+      <div id="list" class="list"></div>
+      <div class="pager">
+        <button id="prevBtn" class="btn ghost">‹ Prev</button>
+        <span id="pageInfo"></span>
+        <button id="nextBtn" class="btn ghost">Next ›</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Create / edit dialog -->
+  <dialog id="editDialog">
+    <form id="editForm" method="dialog">
+      <h3 id="dialogTitle">Edit transcription</h3>
+      <label class="field"><span>Title</span><input id="editTitle" required maxlength="200" /></label>
+      <label class="field"><span>Text</span><textarea id="editText" rows="7" required></textarea></label>
+      <label class="field"><span>Language</span><input id="editLanguage" maxlength="50" value="auto" /></label>
+      <div class="dialog-actions">
+        <button type="button" id="cancelEdit" class="btn ghost">Cancel</button>
+        <button type="submit" class="btn">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="foot">FastAPI · PostgreSQL · Gemini Live API · <a href="/docs" target="_blank">API docs</a></footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
